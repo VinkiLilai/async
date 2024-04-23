@@ -1,6 +1,6 @@
 const API = {
     organizationList: "/orgsList",
-    analytics: "/api3/analytics",
+    analytics: "/api3/analitics",
     orgReqs: "/api3/reqBase",
     buhForms: "/api3/buh",
 };
@@ -32,6 +32,9 @@ function sendRequest(url) {
         .then(response => {
             if (response.status === 200) {
                 return Promise.resolve(response.json());
+            } else if (response.status >= 300) {
+                alert(`${response.status} ${response.statusText}`);
+                return Promise.reject("error error");
             } else {
                 return Promise.reject(response.status);
             }
