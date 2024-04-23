@@ -28,22 +28,14 @@ async function run() {
 run();
 
 function sendRequest(url) {
-    return new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open("GET", url, true);
-
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    resolve(JSON.parse(xhr.response));
-                } else {
-                    reject(xhr.status);
-                }
+    return fetch(url)
+        .then(response => {
+            if (response.status === 200) {
+                return Promise.resolve(response.json());
+            } else {
+                return Promise.reject(response.status);
             }
-        };
-
-        xhr.send();
-    });
+        });
 }
 
 function reqsToMap(requisites) {
